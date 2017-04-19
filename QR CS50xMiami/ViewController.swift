@@ -1,6 +1,8 @@
 //
 //  ViewController.swift
-//  YDIN - Attendance Management System
+//  YDIN - Attendance Management System for CS50xMiami
+//
+//  Final Project.
 //
 //  Created by Evgeny Nagimov on 4/11/17.
 //  Copyright © 2017 JackRus. All rights reserved.
