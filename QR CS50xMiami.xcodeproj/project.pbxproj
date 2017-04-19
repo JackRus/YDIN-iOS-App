@@ -22,6 +22,7 @@
 		5C5AEE2E1E9D44F3007CFCB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5C5AEE311E9D44F3007CFCB0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5C5AEE331E9D44F3007CFCB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5C5AEE3A1E9D4572007CFCB0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +41,7 @@
 			children = (
 				5C5AEE261E9D44F3007CFCB0 /* QR CS50xMiami */,
 				5C5AEE251E9D44F3007CFCB0 /* Products */,
+				5C5AEE391E9D4572007CFCB0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,6 +64,14 @@
 				5C5AEE331E9D44F3007CFCB0 /* Info.plist */,
 			);
 			path = "QR CS50xMiami";
+			sourceTree = "<group>";
+		};
+		5C5AEE391E9D4572007CFCB0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5C5AEE3A1E9D4572007CFCB0 /* AVFoundation.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,10 +273,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 5S7QEX3C8F;
 				INFOPLIST_FILE = "QR CS50xMiami/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "JackRus.QR-CS50xMiami";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -276,10 +288,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 5S7QEX3C8F;
 				INFOPLIST_FILE = "QR CS50xMiami/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "JackRus.QR-CS50xMiami";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -302,6 +316,7 @@
 				5C5AEE381E9D44F3007CFCB0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
