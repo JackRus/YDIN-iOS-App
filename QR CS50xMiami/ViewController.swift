@@ -185,19 +185,28 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         // Parse the string
         let stringQR  = code!.components(separatedBy: ",")
         
-        // Checking if QR String is CS50 string
-        if (stringQR.count == 5) && (stringQR[0] == "Evgeny")
-        {
+        // takes current date
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let resultDate = formatter.string(from: date)
         
+        // Checking if QR String is CS50 string and has current date
+        if (stringQR.count == 5) && (stringQR[0] == "CS50xMiami") && (resultDate == stringQR[3])
+        {
+            
             // Visual confirmation that QR is scanned and is OK
             animatePop(message: "SUCCESSFULLY SCANNED!", color: UIColor.green)
             AudioServicesPlaySystemSound(SystemSoundID(1025))
 
             //put the link of the php file here. The php file connects the mysql and swift
             let request = NSMutableURLRequest(url: NSURL(string: "https://jackrus.net/dbserv.php")! as URL)
+            // HTTP METHOD
             request.httpMethod = "POST"
+            // QUERY
             let postString = "a=\(stringQR[0])&b=\(stringQR[1])&c=\(stringQR[2])&d=\(stringQR[3])&e=\(stringQR[4])"
             
+            // URL + QUERY
             request.httpBody = postString.data(using: String.Encoding.utf8)
             let task = URLSession.shared.dataTask(with: request as URLRequest) {
                 data, response, error in
@@ -214,7 +223,14 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             }
             task.resume()
         }
-        // If QR Code doesn't match CS50 Format
+        // if Date isn't correct --> yellow message
+        else if (stringQR.count == 5) && (stringQR[0] == "CS50xMiami") && (resultDate != stringQR[3])
+        {
+            animatePop(message: "Date is Wrong!", color: UIColor.yellow)
+            AudioServicesPlaySystemSound(SystemSoundID(1034))
+
+        }
+        // If QR Code doesn't match CS50 Format --> red message
         else
         {
             animatePop(message: "Wrong QR Code!", color: UIColor.red)
