@@ -104,7 +104,7 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     /*
      //////////////////////////////////////////////
-     / Switches the cameras beetwen frint and back
+     / Switches the cameras beetwen front and back
      //////////////////////////////////////////////
      */
     
@@ -187,31 +187,41 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         
         // takes current date
         let date = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        let resultDate = formatter.string(from: date)
+        let formatterDate = DateFormatter()
+        let formatterTime = DateFormatter()
+        formatterDate.dateFormat = "yyyy-MM-dd" // case-sensetive
+        formatterTime.dateFormat = "hh:mm:ss"
+        let resultDate = formatterDate.string(from: date)
+        let resultTime = formatterTime.string(from: date)
         
         // Checking if QR String is CS50 string and has current date
-        if (stringQR.count == 5) && (stringQR[0] == "CS50xMiami") && (resultDate == stringQR[3])
+        if (stringQR.count == 7)
+            && (stringQR[0] == "CS5OxMiami")
+            && (resultDate == stringQR[2])
+            && (resultTime > stringQR[3])
         {
-            
             // Visual confirmation that QR is scanned and is OK
             animatePop(message: "SUCCESSFULLY SCANNED!", color: UIColor.green)
             AudioServicesPlaySystemSound(SystemSoundID(1025))
 
             //put the link of the php file here. The php file connects the mysql and swift
             let request = NSMutableURLRequest(url: NSURL(string: "https://jackrus.net/dbserv.php")! as URL)
+            
             // HTTP METHOD
             request.httpMethod = "POST"
+            
             // QUERY
-            let postString = "a=\(stringQR[0])&b=\(stringQR[1])&c=\(stringQR[2])&d=\(stringQR[3])&e=\(stringQR[4])"
+            let postString =
+                // [0] - CS5OxMiami, [1] - ID, [2] - date, [3] - time, [4] - name, [5] - lastname, [7] - event_type
+                "a=\(stringQR[0])&b=\(stringQR[1])&c=\(stringQR[2])&d=\(stringQR[3])&e=\(stringQR[4])&f=\(stringQR[5])&g=\(stringQR[6])"
             
             // URL + QUERY
             request.httpBody = postString.data(using: String.Encoding.utf8)
-            let task = URLSession.shared.dataTask(with: request as URLRequest) {
+            let task = URLSession.shared.dataTask(with: request as URLRequest)
+            {
                 data, response, error in
-            
-                if error != nil {
+                if error != nil
+                {
                     print("error=\(String(describing: error))")
                     return
                 }
@@ -223,13 +233,16 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             }
             task.resume()
         }
+        
         // if Date isn't correct --> yellow message
-        else if (stringQR.count == 5) && (stringQR[0] == "CS50xMiami") && (resultDate != stringQR[3])
+        else if (stringQR.count == 7)
+            && (stringQR[0] == "CS5OxMiami")
+            && ((resultDate != stringQR[3]) || (resultTime < stringQR[3]))
         {
-            animatePop(message: "Date is Wrong!", color: UIColor.yellow)
+            animatePop(message: "Date or Time is Wrong! Please, reload your QR Code.", color: UIColor.yellow)
             AudioServicesPlaySystemSound(SystemSoundID(1034))
-
         }
+        
         // If QR Code doesn't match CS50 Format --> red message
         else
         {
@@ -238,7 +251,8 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         }
         
         //creates delay between scans
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0)
+        {
             self.captureSession?.startRunning()
         }
     }
