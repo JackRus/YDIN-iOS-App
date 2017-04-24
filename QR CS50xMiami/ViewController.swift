@@ -185,20 +185,57 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         // Parse the string
         let stringQR  = code!.components(separatedBy: ",")
         
-        // takes current date
+        // takes current date and time
         let date = Date()
         let formatterDate = DateFormatter()
         let formatterTime = DateFormatter()
         formatterDate.dateFormat = "yyyy-MM-dd" // case-sensetive
-        formatterTime.dateFormat = "hh:mm:ss"
+        formatterTime.dateFormat = "HH:mm:ss"
         let resultDate = formatterDate.string(from: date)
         let resultTime = formatterTime.string(from: date)
+        
+        
+        // TIME CONTROL
+        var maxTime = ""
+        var minTime = ""
+        
+        if stringQR[6] == "lecture"
+        {
+            maxTime = "21:00:00"
+            minTime = "17:00:00"
+        }
+        else if stringQR[6] == "section"
+        {
+            maxTime = "14:30:00"
+            minTime = "08:30:00"
+        }
+        else if stringQR[6] == "coding"
+        {
+            maxTime = "17:00:00"
+            minTime = "11:00:00"
+        }
+        else if stringQR[6] == "track"
+        {
+            maxTime = "22:00:00"
+            minTime = "17:00:00"
+        }
+        else if stringQR[6] == "special"
+        {
+            maxTime = "23:59:59"
+            minTime = "00:00:00"
+        }
+        
         
         // Checking if QR String is CS50 string and has current date
         if (stringQR.count == 7)
             && (stringQR[0] == "CS5OxMiami")
             && (resultDate == stringQR[2])
             && (resultTime > stringQR[3])
+            && (resultTime > minTime)
+            && (resultTime < maxTime)
+            && (stringQR[3] > minTime)
+            && (stringQR[3] < maxTime)
+
         {
             // Visual confirmation that QR is scanned and is OK
             animatePop(message: "SUCCESSFULLY SCANNED!", color: UIColor.green)
@@ -213,7 +250,7 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             // QUERY
             let postString =
                 // [0] - CS5OxMiami, [1] - ID, [2] - date, [3] - time, [4] - name, [5] - lastname, [7] - event_type
-                "a=\(stringQR[0])&b=\(stringQR[1])&c=\(stringQR[2])&d=\(stringQR[3])&e=\(stringQR[4])&f=\(stringQR[5])&g=\(stringQR[6])"
+                "a=\(stringQR[1])&b=\(stringQR[2])&c=\(stringQR[3])&d=\(stringQR[4])&e=\(stringQR[5])&f=\(stringQR[6])"
             
             // URL + QUERY
             request.httpBody = postString.data(using: String.Encoding.utf8)
@@ -237,9 +274,14 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         // if Date isn't correct --> yellow message
         else if (stringQR.count == 7)
             && (stringQR[0] == "CS5OxMiami")
-            && ((resultDate != stringQR[3]) || (resultTime < stringQR[3]))
+            && ((resultDate != stringQR[2])
+                 || (resultTime < stringQR[3])
+                 || (resultTime < minTime)
+                 || (resultTime > maxTime)
+                 || (stringQR[3] < minTime)
+                 || (stringQR[3] > maxTime))
         {
-            animatePop(message: "Date or Time is Wrong! Please, reload your QR Code.", color: UIColor.yellow)
+            animatePop(message: "Please, RESET your QR Code.", color: UIColor.init(red: 236/255.0, green: 161/255.0, blue: 10/255.0, alpha: 1.0))
             AudioServicesPlaySystemSound(SystemSoundID(1034))
         }
         
