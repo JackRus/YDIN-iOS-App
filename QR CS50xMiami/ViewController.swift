@@ -20,11 +20,8 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     @IBOutlet var addItemView: UIView!
     @IBOutlet weak var popLabel: UILabel!
     
-    /*
-    //////////////////////////////
-    / Button to switch the cameras
-    //////////////////////////////
-    */
+  
+    /* Button to switch the cameras */
 
     // action button
     @IBAction func switcher(_ sender: Any) {
@@ -49,6 +46,7 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             return
         }
         
+        // Checks if camera is available
         if (captureSession.canAddInput(videoInput)) {
             captureSession.addInput(videoInput)
         } else {
@@ -74,10 +72,10 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
         view.layer.addSublayer(previewLayer);
         
-        // Brings Button and to the front
+        // brings Button and to the front
         view.bringSubview(toFront: switcherView)
         
-        // Begin capturing
+        // begin capture session
         captureSession.startRunning();
         
     }
@@ -226,7 +224,7 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         }
         
         
-        // Checking if QR String is CS50 string and has current date
+        // Checking if QR String is CS50 string and has current date and time
         if (stringQR.count == 7)
             && (stringQR[0] == "CS5OxMiami")
             && (resultDate == stringQR[2])
@@ -237,7 +235,7 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             && (stringQR[3] < maxTime)
 
         {
-            // Visual confirmation that QR is scanned and is OK
+            // Visual "GREEN" confirmation that QR is scanned and is OK
             animatePop(message: "SUCCESSFULLY SCANNED!", color: UIColor.green)
             AudioServicesPlaySystemSound(SystemSoundID(1025))
 
@@ -263,7 +261,7 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                     return
                 }
             
-                // PHP response control
+                // PHP response control, prints to console
                 let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
                 print("===> PHP Response = \(String(describing: responseString))")
         
@@ -271,7 +269,7 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             task.resume()
         }
         
-        // if Date isn't correct --> yellow message
+        // if Date isn't correct --> dark orange message and sound
         else if (stringQR.count == 7)
             && (stringQR[0] == "CS5OxMiami")
             && ((resultDate != stringQR[2])
@@ -285,7 +283,7 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             AudioServicesPlaySystemSound(SystemSoundID(1034))
         }
         
-        // If QR Code doesn't match CS50 Format --> red message
+        // If QR Code isn't CS50 QR Code --> red message
         else
         {
             animatePop(message: "Wrong QR Code!", color: UIColor.red)
@@ -328,7 +326,7 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             self.addItemView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
             self.addItemView.alpha = 0
             
-        }) { (success:Bool) in
+        }) {(success:Bool) in
             self.addItemView.removeFromSuperview()
         }
     }
