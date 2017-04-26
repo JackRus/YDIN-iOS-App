@@ -181,7 +181,7 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     func found (code:String?){
         
         // Parse the string
-        let stringQR  = code!.components(separatedBy: ",")
+        var stringQR  = code!.components(separatedBy: ",")
         
         // takes current date and time
         let date = Date()
@@ -228,7 +228,7 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             minTime = "00:00:00"
         }
         
-        stringQR[6] == "section"
+        stringQR[6] = "section"
         
         // Checking if QR String is CS50 string and has current date and time
         if (stringQR.count == 7)
