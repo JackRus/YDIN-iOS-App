@@ -197,38 +197,39 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         var maxTime = ""
         var minTime = ""
         
-        if stringQR[6] == "lecture"
+        if (stringQR.count == 7)
         {
-            maxTime = "21:00:00"
-            minTime = "17:00:00"
+            if stringQR[6] == "lecture"
+            {
+                maxTime = "21:00:00"
+                minTime = "17:00:00"
+            }
+            else if stringQR[6] == "section12_14"
+            {
+                maxTime = "14:30:00"
+                minTime = "11:00:00"
+            }
+            else if stringQR[6] == "section9_11"
+            {
+                maxTime = "11:30:00"
+                minTime = "08:30:00"
+            }
+            else if stringQR[6] == "coding"
+            {
+                maxTime = "17:00:00"
+                minTime = "11:00:00"
+            }
+            else if stringQR[6] == "track"
+            {
+                maxTime = "22:00:00"
+                minTime = "17:00:00"
+            }
+            else if stringQR[6] == "special"
+            {
+                maxTime = "23:59:59"
+                minTime = "00:00:00"
+            }
         }
-        else if stringQR[6] == "section12_14"
-        {
-            maxTime = "14:30:00"
-            minTime = "11:00:00"
-        }
-        else if stringQR[6] == "section9_11"
-        {
-            maxTime = "11:30:00"
-            minTime = "08:30:00"
-        }
-        else if stringQR[6] == "coding"
-        {
-            maxTime = "17:00:00"
-            minTime = "11:00:00"
-        }
-        else if stringQR[6] == "track"
-        {
-            maxTime = "22:00:00"
-            minTime = "17:00:00"
-        }
-        else if stringQR[6] == "special"
-        {
-            maxTime = "23:59:59"
-            minTime = "00:00:00"
-        }
-        
-        stringQR[6] = "section"
         
         // Checking if QR String is CS50 string and has current date and time
         if (stringQR.count == 7)
@@ -328,7 +329,7 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         }
         
         // Animation OUT
-        UIView.animate(withDuration: 2.0, animations: {
+        UIView.animate(withDuration: 3.0, animations: {
             self.addItemView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
             self.addItemView.alpha = 0
             
