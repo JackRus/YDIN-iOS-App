@@ -202,9 +202,14 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             maxTime = "21:00:00"
             minTime = "17:00:00"
         }
-        else if stringQR[6] == "section"
+        else if stringQR[6] == "section12_14"
         {
             maxTime = "14:30:00"
+            minTime = "11:00:00"
+        }
+        else if stringQR[6] == "section9_11"
+        {
+            maxTime = "11:30:00"
             minTime = "08:30:00"
         }
         else if stringQR[6] == "coding"
@@ -223,6 +228,7 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             minTime = "00:00:00"
         }
         
+        stringQR[6] == "section"
         
         // Checking if QR String is CS50 string and has current date and time
         if (stringQR.count == 7)
