@@ -58,7 +58,7 @@
         <false/>
         <key>NSExceptionDomains</key>
         <dict>
-            <key>app.cs50xmiami.com</key>
+            <key>cs50xmiami.com</key>
             <dict>
                 <key>NSIncludesSubdomains</key>
                 <true/>

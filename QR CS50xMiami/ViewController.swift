@@ -247,7 +247,7 @@ class ViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             AudioServicesPlaySystemSound(SystemSoundID(1025))
 
             //put the link of the php file here. The php file connects the mysql and swift
-            let request = NSMutableURLRequest(url: NSURL(string: "https://jackrus.net/dbserv.php")! as URL)
+            let request = NSMutableURLRequest(url: NSURL(string: "http://cs50xmiami.com/dbserv.php")! as URL)
             
             // HTTP METHOD
             request.httpMethod = "POST"
