@@ -1,5 +1,5 @@
-YDIN - is an iOS App.
+#YDIN - is an iOS App.
 
-Part of my Final Project for CS50xMiami (Cohort 6, Spring 2017)
+Part of my [Final Project for CS50xMiami](https://github.com/JackRus/YDIN-Web-Part) (Cohort 6, Spring 2017)
 
-The main purpose is to scan unique QR codes generated on the server for each student (requires logi in).
+The main purpose of this app is to scan unique QR codes generated for each student everytime they attend one of events (lectures, sections, coding hours, quizes).
